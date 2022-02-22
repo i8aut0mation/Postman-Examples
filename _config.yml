@@ -1,9 +1,1 @@
 theme: jekyll-theme-time-machine
-
-layout: page
-title: "Option 1"
-permalink: /Option1/
-
-layout: page
-title: "Option 2"
-permalink: /Option2/
