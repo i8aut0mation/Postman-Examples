@@ -1,5 +1,23 @@
 ## Welcome to GitHub Pages
 
+
+<table width=100%>
+    <thead>
+        <tr style="background-color:#FF0000">
+            <th colspan=3>Postman Test Examples Collection Includes...</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr height=80>
+            <td width="33%">Status code check</td>
+            <td width="33%">Response time check</td>
+            <td width="33%">Check data type of a response value</td>
+        </tr>
+    </tbody>
+</table>
+      
+      
+
 Menu: [Page1](https://w4dd325.github.io/Postman-Examples/page1)
 
 You can use the [editor on GitHub](https://github.com/w4dd325/postman-test-examples/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
