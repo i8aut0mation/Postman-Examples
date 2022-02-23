@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ba5f0abd-4126-42f6-8bb0-f6478e781d14",
+		"_postman_id": "e34bec43-e623-41e8-adfb-64960a28e705",
 		"name": "Postman Test Examples",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -785,6 +785,522 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "For each in array with if",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"for (let i = 0; i < response.tags.length; i++) {\r",
+							"    console.log(\"value is \" + response.tags[i].name + \" and index is \" + i)\r",
+							"    if(response.tags[i].name === \"string\"){\r",
+							"        console.log(\"IF STRING = value is \" + response.tags[i].name + \" and index is \" + i)\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://virtserver.swaggerhub.com/w4dd325/test/1.0.0/pet/0",
+					"protocol": "https",
+					"host": [
+						"virtserver",
+						"swaggerhub",
+						"com"
+					],
+					"path": [
+						"w4dd325",
+						"test",
+						"1.0.0",
+						"pet",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Base64 Encode and Decode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json().category.name;\r",
+							"//Encode value\r",
+							"var encodedMessage = btoa(response);\r",
+							"console.log(encodedMessage);\r",
+							"//Decode value\r",
+							"var decodedMessage = atob(encodedMessage);\r",
+							"console.log(decodedMessage);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://virtserver.swaggerhub.com/w4dd325/test/1.0.0/pet/0",
+					"protocol": "https",
+					"host": [
+						"virtserver",
+						"swaggerhub",
+						"com"
+					],
+					"path": [
+						"w4dd325",
+						"test",
+						"1.0.0",
+						"pet",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find in response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Find completes on the first occurance found.\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Result has Mr\", () => {\r",
+							"    let result = jsonData.results.find(a => a.name.title === \"Mr\")\r",
+							"    pm.expect(result.name.title).to.eql(\"Mr\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://randomuser.me/api/",
+					"protocol": "https",
+					"host": [
+						"randomuser",
+						"me"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter in response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Filter returns all occurances found.\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Use filter to count all US alpha_two_codes\", () => {\r",
+							"    let result = jsonData.filter(a => a.alpha_two_code === \"US\")\r",
+							"    console.log(result.length)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://universities.hipolabs.com/search?country=United+States",
+					"protocol": "http",
+					"host": [
+						"universities",
+						"hipolabs",
+						"com"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "United+States"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"console.log(jsonData.results[0].name.title);\r",
+							"\r",
+							"const hasItemDetails = (jsonData.results[0].name.title.includes('Mr') \r",
+							"    || jsonData.results[0].name.title.includes('Mrs'));\r",
+							"\r",
+							"pm.test(\"Is Mr OR Mrs\", function () {\r",
+							"    pm.expect(hasItemDetails).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://randomuser.me/api/",
+					"protocol": "https",
+					"host": [
+						"randomuser",
+						"me"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AND",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.results[0].name.title);\r",
+							"console.log(jsonData.results[0].gender);\r",
+							"\r",
+							"//Check the condition and save as Bool value\r",
+							"const hasItemDetails = (jsonData.results[0].name.title.includes('Miss') \r",
+							"    && jsonData.results[0].gender.includes(\"female\"));\r",
+							"\r",
+							"//Test if Bool is True or False\r",
+							"pm.test(\"Is Mr AND United Kingdom\", function () {\r",
+							"    pm.expect(hasItemDetails).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://randomuser.me/api/",
+					"protocol": "https",
+					"host": [
+						"randomuser",
+						"me"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Greater than and less than",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.results[0].dob.age);\r",
+							"\r",
+							"pm.test(\"Age is greater than 30\", function () {\r",
+							"    pm.expect(jsonData.results[0].dob.age).to.be.above(30);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Age is less than 70\", function () {\r",
+							"    pm.expect(jsonData.results[0].dob.age).to.be.below(70);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://randomuser.me/api/",
+					"protocol": "https",
+					"host": [
+						"randomuser",
+						"me"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replace a character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json().info.version;\r",
+							"\r",
+							"let newVal = jsonData.replace('.', '');\r",
+							"\r",
+							"console.log(newVal);\r",
+							"console.log(newVal.length);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://randomuser.me/api/",
+					"protocol": "https",
+					"host": [
+						"randomuser",
+						"me"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Math Round",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.bpi.GBP.rate_float);\r",
+							"let numberToRound = jsonData.bpi.GBP.rate_float;\r",
+							"console.log(Math.floor(numberToRound));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.coindesk.com/v1/bpi/currentprice.json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"coindesk",
+						"com"
+					],
+					"path": [
+						"v1",
+						"bpi",
+						"currentprice.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Math Round Down with Floor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.bpi.GBP.rate_float);\r",
+							"let numberToRound = jsonData.bpi.GBP.rate_float;\r",
+							"console.log(Math.floor(numberToRound));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.coindesk.com/v1/bpi/currentprice.json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"coindesk",
+						"com"
+					],
+					"path": [
+						"v1",
+						"bpi",
+						"currentprice.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Math Round Up with Ceil",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.bpi.GBP.rate_float);\r",
+							"let numberToRound = jsonData.bpi.GBP.rate_float;\r",
+							"console.log(Math.ceil(numberToRound));\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.coindesk.com/v1/bpi/currentprice.json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"coindesk",
+						"com"
+					],
+					"path": [
+						"v1",
+						"bpi",
+						"currentprice.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Math Trunc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.bpi.GBP.rate_float);\r",
+							"let numberToRound = jsonData.bpi.GBP.rate_float;\r",
+							"console.log(Math.trunc(numberToRound));\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.coindesk.com/v1/bpi/currentprice.json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"coindesk",
+						"com"
+					],
+					"path": [
+						"v1",
+						"bpi",
+						"currentprice.json"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -812,6 +1328,10 @@
 			"key": "token",
 			"value": "125",
 			"type": "string"
+		},
+		{
+			"key": "talls",
+			"value": ""
 		}
 	]
 }
